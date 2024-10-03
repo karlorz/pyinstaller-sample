@@ -1,7 +1,13 @@
 import requests
+import configparser
 
 def fetch_data():
-    url = "https://jsonplaceholder.typicode.com/posts/1"
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    
+    # Use the URL from the config file, or fall back to the predefined URL
+    url = config['DEFAULT'].get('api_url', 'https://jsonplaceholder.typicode.com/posts/1')
+    
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
